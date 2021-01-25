@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
 import ICreateVehicleDTO from '@modules/vehicle/dtos/ICreateVehicleDTO';
 import CreateVehicleService from '@modules/vehicle/services/CreateVehicleService';
 import AppError from '@shared/errors/AppError';
@@ -11,7 +13,15 @@ export default class VehicleController {
 
     const vehicles = await vehicleRepository.showVehicles();
 
-    return response.json(vehicles);
+    const showVehicles = vehicles;
+
+    showVehicles.map(vehicle =>
+      vehicle.carrier.address
+        ? (vehicle.carrier.address = JSON.parse(vehicle.carrier.address))
+        : vehicle.carrier.address,
+    );
+
+    return response.json(showVehicles);
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
