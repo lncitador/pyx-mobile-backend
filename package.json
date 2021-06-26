@@ -5,8 +5,7 @@
     "license": "MIT",
     "scripts": {
         "build": "tsc",
-        "dev:server": "POSTGRES_HOST=localhost ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules ./src/shared/infra/http/server.ts",
-        "start": "POSTGRES_HOST=pyxmobile ts-node-dev -r tsconfig-paths/register ./src/shared/infra/http/server.ts",
+        "dev-server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore node_modules --respawn src/shared/infra/http/server.ts",
         "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
     },
     "devDependencies": {

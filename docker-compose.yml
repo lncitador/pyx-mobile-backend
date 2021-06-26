@@ -1,23 +1,31 @@
-version: '3'
+version: '3.7'
 services:
   pyxmobile:
-    image: "postgres:latest" # use latest official postgres version
-    environment:
-            POSTGRES_PASSWORD: docker
-            POSTGRES_USER: postgres
-            POSTGRES_DB: mobile
-    volumes:
-      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    image: postgres:lastest
+    container_name: database_ignite
+    restart: always
     ports:
-      - "5432:5432"
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=mobile
+    volumes:
+      - pgdata:/data/postgres
   mobile:
+    build: .
     container_name: api
     restart: always
-    build: .
     ports:
-      - "3435:3435"
+      - 3435:3435
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+    links:
+      - pyxmobile
     depends_on:
       - pyxmobile
-volumes:
-  database-data: # named volumes can be managed easier using docker-compose
 
+volumes:
+  pgdata:
+    driver: local

@@ -1,13 +1,13 @@
 FROM node:14
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm i
+RUN npm install
 
 COPY . .
 
 EXPOSE 3435
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev:server"]
